@@ -28,7 +28,7 @@ import { useTableURLState } from "src/components/DataTable/useTableUrlState";
 import { ErrorAlert } from "src/components/ErrorAlert";
 import { TruncatedText } from "src/components/TruncatedText";
 import { SearchParamsKeys, type SearchParamsKeysType } from "src/constants/searchParams";
-import { getTaskInstanceLinkFromObj } from "src/utils/links";
+import { getTaskInstanceLink } from "src/utils/links";
 
 import { XComEntry } from "./XComEntry";
 import { XComFilters } from "./XComFilters";
@@ -74,7 +74,7 @@ const columns = (translate: (key: string) => string): Array<ColumnDef<XComRespon
     cell: ({ row: { original } }: { row: { original: XComResponse } }) => (
       <Link asChild color="fg.info" fontWeight="bold">
         <RouterLink
-          to={getTaskInstanceLinkFromObj({
+          to={getTaskInstanceLink({
             dagId: original.dag_id,
             dagRunId: original.run_id,
             mapIndex: original.map_index,
@@ -150,9 +150,7 @@ export const XCom = () => {
     xcomKeyPattern: filteredKey ?? undefined,
   };
 
-  const { data, error, isFetching, isLoading } = useXcomServiceGetXcomEntries(apiParams, undefined, {
-    enabled: !isNaN(pagination.pageSize),
-  });
+  const { data, error, isFetching, isLoading } = useXcomServiceGetXcomEntries(apiParams, undefined);
 
   return (
     <Box>
